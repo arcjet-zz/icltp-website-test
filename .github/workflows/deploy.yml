@@ -10,6 +10,7 @@ permissions:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  SITE_URL: https://icltp.delores.dpdns.org
 
 concurrency:
   group: pages
