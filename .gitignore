@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.astro/
+.agents/
+.pnpm-store/
+.DS_Store
+*.log
+snapshot/
+design-system/
+docs/
+scripts/
+skills-lock.json
+MAINTENANCE.md

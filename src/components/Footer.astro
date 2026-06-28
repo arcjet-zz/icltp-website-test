@@ -1,0 +1,46 @@
+---
+import { withBase } from '../utils/url';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <div class="footer-intro">
+      <a class="footer-mark" href={withBase('/')} aria-label="ICLTP home">ICLTP<span>2027</span></a>
+      <p>
+        The 1st International Conference on Low Temperature Plasmas brings the global plasma community
+        together in Beijing.
+      </p>
+      <div class="footer-emails">
+        <a href="mailto:tianshengwei@buaa.edu.cn">tianshengwei@buaa.edu.cn</a>
+        <a href="mailto:20375069@buaa.edu.cn">20375069@buaa.edu.cn</a>
+      </div>
+    </div>
+
+    <div>
+      <p class="footer-heading">Conference</p>
+      <a href={withBase('/topics/')}>Scientific topics</a>
+      <a href={withBase('/speakers/')}>Invited speakers</a>
+      <a href={withBase('/program/')}>Program</a>
+      <a href={withBase('/committees/')}>Committees</a>
+    </div>
+    <div>
+      <p class="footer-heading">Participate</p>
+      <a href={withBase('/abstract-submission/')}>Submit an abstract</a>
+      <a href={withBase('/registration/')}>Registration</a>
+      <a href={withBase('/travel-grants/')}>Travel grants</a>
+      <a href={withBase('/sponsorship/')}>Sponsorship</a>
+    </div>
+    <div>
+      <p class="footer-heading">Beijing</p>
+      <a href={withBase('/venue/')}>Venue & transport</a>
+      <a href={withBase('/lodging/')}>Lodging</a>
+      <a href={withBase('/visa/')}>Visa information</a>
+      <a href={withBase('/tours/')}>Tours</a>
+    </div>
+  </div>
+  <div class="shell footer-meta">
+    <span>© {year} ICLTP. Chinese Society of Theoretical and Applied Mechanics.</span>
+    <span>April 19–23, 2027 · Beijing, China</span>
+  </div>
+</footer>

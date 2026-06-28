@@ -1,0 +1,171 @@
+---
+import { Image } from 'astro:assets';
+import cornerTower from '../assets/hero/beijing-corner-tower-sunset.jpg';
+import greatWall from '../assets/hero/beijing-great-wall.jpg';
+import venueCampus from '../assets/hero/conference-venue-campus.png';
+import forbiddenCityAutumn from '../assets/hero/beijing-forbidden-city-autumn.jpg';
+import summerPalace from '../assets/hero/beijing-summer-palace.jpg';
+import venueAtrium from '../assets/hero/conference-venue-atrium.jpg';
+import beihaiPark from '../assets/hero/beijing-beihai-white-pagoda.jpg';
+
+const slides = [
+  {
+    image: cornerTower,
+    title: 'Corner Tower at sunset',
+    alt: 'The Forbidden City Corner Tower reflected in the moat beneath a colorful evening sky',
+  },
+  {
+    image: greatWall,
+    title: 'The Great Wall',
+    alt: 'The Great Wall winding across green mountain ridges near Beijing',
+  },
+  {
+    image: forbiddenCityAutumn,
+    title: 'Autumn in Beijing',
+    alt: 'Golden ginkgo leaves framing traditional palace roofs in Beijing',
+  },
+  {
+    image: summerPalace,
+    title: 'Summer Palace',
+    alt: 'The Summer Palace overlooking Kunming Lake in warm evening light',
+  },
+  {
+    image: beihaiPark,
+    title: 'Beihai Park',
+    alt: 'The White Pagoda above Beihai Park, with a stone bridge and lake in the foreground',
+  },
+  {
+    image: venueCampus,
+    title: 'Conference campus',
+    alt: 'Aerial view of the conference campus and its landscaped central plaza',
+  },
+  {
+    image: venueAtrium,
+    title: 'Conference venue',
+    alt: 'The bright multi-level atrium inside the conference venue',
+  },
+];
+---
+
+<div
+  class="hero-carousel"
+  data-hero-carousel
+  aria-label="Beijing and conference venue highlights"
+  aria-roledescription="carousel"
+  tabindex="0"
+>
+  <div class="hero-carousel-viewport">
+    {
+      slides.map((slide, index) => (
+        <figure
+          class:list={['hero-slide', { 'is-active': index === 0 }]}
+          data-carousel-slide
+          aria-hidden={index === 0 ? 'false' : 'true'}
+        >
+          <Image
+            src={slide.image}
+            alt={slide.alt}
+            widths={[480, 720, 960]}
+            sizes="(max-width: 640px) 92vw, (max-width: 900px) 72vw, 38vw"
+            loading={index === 0 ? 'eager' : 'lazy'}
+            quality={84}
+          />
+        </figure>
+      ))
+    }
+  </div>
+
+  <div class="hero-carousel-toolbar">
+    <p class="hero-carousel-caption" aria-live="polite">
+      <span data-carousel-counter>01 / 07</span>
+      <strong data-carousel-caption>{slides[0].title}</strong>
+    </p>
+    <div class="hero-carousel-controls">
+      <button type="button" data-carousel-previous aria-label="Show previous image">
+        <svg aria-hidden="true" viewBox="0 0 20 20"><path d="m12.5 5-5 5 5 5" /></svg>
+      </button>
+      <button type="button" data-carousel-pause aria-label="Pause image carousel">
+        <svg class="carousel-pause-icon" aria-hidden="true" viewBox="0 0 20 20"><path d="M7 5v10M13 5v10" /></svg>
+        <svg class="carousel-play-icon" aria-hidden="true" viewBox="0 0 20 20"><path d="m7 5 8 5-8 5Z" /></svg>
+      </button>
+      <button type="button" data-carousel-next aria-label="Show next image">
+        <svg aria-hidden="true" viewBox="0 0 20 20"><path d="m7.5 5 5 5-5 5" /></svg>
+      </button>
+    </div>
+  </div>
+  <div class="hero-carousel-progress" aria-hidden="true"><span></span></div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-hero-carousel]').forEach((carousel) => {
+    const slides = Array.from(carousel.querySelectorAll<HTMLElement>('[data-carousel-slide]'));
+    const previous = carousel.querySelector<HTMLButtonElement>('[data-carousel-previous]');
+    const next = carousel.querySelector<HTMLButtonElement>('[data-carousel-next]');
+    const pause = carousel.querySelector<HTMLButtonElement>('[data-carousel-pause]');
+    const counter = carousel.querySelector<HTMLElement>('[data-carousel-counter]');
+    const caption = carousel.querySelector<HTMLElement>('[data-carousel-caption]');
+    const progress = carousel.querySelector<HTMLElement>('.hero-carousel-progress');
+    const titles = [
+      'Corner Tower at sunset',
+      'The Great Wall',
+      'Autumn in Beijing',
+      'Summer Palace',
+      'Beihai Park',
+      'Conference campus',
+      'Conference venue',
+    ];
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let current = 0;
+    let timer: number | undefined;
+    let manuallyPaused = reducedMotion;
+
+    if (manuallyPaused && pause) {
+      pause.classList.add('is-paused');
+      pause.setAttribute('aria-label', 'Resume image carousel');
+    }
+
+    const stop = () => {
+      window.clearInterval(timer);
+      timer = undefined;
+      progress?.classList.remove('is-running');
+    };
+
+    const start = () => {
+      stop();
+      if (manuallyPaused || document.hidden) return;
+      progress?.classList.add('is-running');
+      timer = window.setInterval(() => show(current + 1), 6000);
+    };
+
+    const show = (requested: number) => {
+      current = (requested + slides.length) % slides.length;
+      slides.forEach((slide, index) => {
+        const active = index === current;
+        slide.classList.toggle('is-active', active);
+        slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+      });
+      if (counter) counter.textContent = `${String(current + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+      if (caption) caption.textContent = titles[current];
+      start();
+    };
+
+    previous?.addEventListener('click', () => show(current - 1));
+    next?.addEventListener('click', () => show(current + 1));
+    pause?.addEventListener('click', () => {
+      manuallyPaused = !manuallyPaused;
+      pause.classList.toggle('is-paused', manuallyPaused);
+      pause.setAttribute('aria-label', manuallyPaused ? 'Resume image carousel' : 'Pause image carousel');
+      manuallyPaused ? stop() : start();
+    });
+    carousel.addEventListener('mouseenter', stop);
+    carousel.addEventListener('mouseleave', start);
+    carousel.addEventListener('focusin', stop);
+    carousel.addEventListener('focusout', start);
+    carousel.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') show(current - 1);
+      if (event.key === 'ArrowRight') show(current + 1);
+    });
+    document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+    start();
+  });
+</script>

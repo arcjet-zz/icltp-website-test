@@ -1,0 +1,93 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../utils/url';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  return articles.map((article) => ({
+    params: { slug: article.data.route },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+const formattedDate = article.data.updatedAt.toLocaleDateString('en-GB', {
+  day: '2-digit',
+  month: 'short',
+  year: 'numeric',
+});
+---
+
+<BaseLayout title={`${article.data.title} — ICLTP 2027`} description={article.data.description}>
+  <section class="article-hero">
+    <div class="article-hero-orbit" aria-hidden="true"></div>
+    <div class="shell">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href={withBase('/')}>Home</a><span aria-hidden="true">/</span><span>{article.data.eyebrow}</span>
+      </nav>
+      <p class="eyebrow eyebrow-light"><span></span>{article.data.eyebrow}</p>
+      <h1>{article.data.title}</h1>
+      <p>{article.data.description}</p>
+    </div>
+  </section>
+  <div class="shell article-layout">
+    <article class="article-main">
+      <div class="article-meta">
+        <div><span>Last updated</span><strong>{formattedDate}</strong></div>
+        <div><span>Prepared by</span><strong>{article.data.source}</strong></div>
+      </div>
+      <div class="article-content">
+        <Content />
+      </div>
+    </article>
+    <aside class="article-aside">
+      <div class="aside-card aside-card-accent">
+        <span>ICLTP 2027</span>
+        <strong>April 19–23</strong>
+        <p>Vision Plaza Shahe Bailing<br />Beijing, China</p>
+      </div>
+      <details class="aside-card aside-quick-links">
+        <summary>
+          <span>Quick links</span>
+          <small>4 destinations</small>
+          <svg aria-hidden="true" viewBox="0 0 16 16"><path d="m4 6 4 4 4-4" /></svg>
+        </summary>
+        <div>
+          <a href={withBase('/abstract-submission/')}>Abstract submission <b aria-hidden="true">↗</b></a>
+          <a href={withBase('/registration/')}>Registration <b aria-hidden="true">↗</b></a>
+          <a href={withBase('/venue/')}>Venue & travel <b aria-hidden="true">↗</b></a>
+          <a href={withBase('/contact/')}>Contact us <b aria-hidden="true">↗</b></a>
+        </div>
+      </details>
+      <div class="aside-card aside-help">
+        <span>Need help?</span>
+        <p class="aside-help-intro">Choose the contact group that best matches your question.</p>
+        <details class="aside-help-group" name="contact-groups">
+          <summary>
+            <span>Scientific & technical</span>
+            <small>2 contacts</small>
+            <svg aria-hidden="true" viewBox="0 0 16 16"><path d="m4 6 4 4 4-4" /></svg>
+          </summary>
+          <div>
+            <a href="mailto:tianshengwei@buaa.edu.cn"><strong>Shengwei Tian</strong><small>tianshengwei@buaa.edu.cn</small></a>
+            <a href="mailto:20375069@buaa.edu.cn"><strong>Tao Wu</strong><small>20375069@buaa.edu.cn</small></a>
+          </div>
+        </details>
+        <details class="aside-help-group" name="contact-groups">
+          <summary>
+            <span>All other questions</span>
+            <small>2 contacts</small>
+            <svg aria-hidden="true" viewBox="0 0 16 16"><path d="m4 6 4 4 4-4" /></svg>
+          </summary>
+          <div>
+            <a href="mailto:whx@buaa.edu.cn"><strong>Hai-Xing Wang</strong><small>whx@buaa.edu.cn</small></a>
+            <a href="mailto:schulze@aept.rub.de"><strong>Julian Schulze</strong><small>schulze@aept.rub.de</small></a>
+          </div>
+        </details>
+        <a class="aside-contact-directory" href={withBase('/contact/')}>Open full contact directory <b aria-hidden="true">↗</b></a>
+      </div>
+    </aside>
+  </div>
+</BaseLayout>

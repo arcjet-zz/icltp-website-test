@@ -1,0 +1,79 @@
+---
+import { Image } from 'astro:assets';
+import { navGroups } from '../data/site';
+import { resolveHref, withBase } from '../utils/url';
+import icltpLogo from '../assets/branding/icltp-2027-logo.png';
+---
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<div class="announcement">
+  <div class="shell announcement-inner">
+    <span><strong>ICLTP 2027</strong> · Beijing · April 19–23, 2027</span>
+    <a href={withBase('/registration/')}>Registration opens August 1, 2026 <span aria-hidden="true">↗</span></a>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href={withBase('/')} aria-label="ICLTP 2027 home">
+      <Image src={icltpLogo} alt="ICLTP 2027 conference logo" width={120} quality={90} />
+      <span class="brand-copy">
+        <strong>ICLTP</strong>
+        <small>Beijing · 2027</small>
+      </span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      {
+        navGroups.map((group) => (
+          <div class="nav-group">
+            <button type="button" aria-expanded="false">
+              {group.label}
+              <svg aria-hidden="true" viewBox="0 0 16 16"><path d="m4 6 4 4 4-4" /></svg>
+            </button>
+            <div class="nav-popover">
+              {group.links.map((link) => <a href={resolveHref(link.href)}>{link.label}<span aria-hidden="true">↗</span></a>)}
+            </div>
+          </div>
+        ))
+      }
+    </nav>
+
+    <a class="button button-small header-cta" href={withBase('/registration/')}>
+      Register
+      <svg aria-hidden="true" viewBox="0 0 20 20"><path d="M5 15 15 5M7 5h8v8" /></svg>
+    </a>
+
+    <details class="mobile-menu">
+      <summary aria-label="Open navigation">
+        <span></span><span></span>
+      </summary>
+      <div class="mobile-menu-panel">
+        {
+          navGroups.map((group) => (
+            <div>
+              <p>{group.label}</p>
+              {group.links.map((link) => <a href={resolveHref(link.href)}>{link.label}<span aria-hidden="true">↗</span></a>)}
+            </div>
+          ))
+        }
+        <a class="button" href={withBase('/registration/')}>Register</a>
+      </div>
+    </details>
+  </div>
+</header>
+
+<script>
+  document.querySelectorAll('.nav-group').forEach((group) => {
+    const button = group.querySelector('button');
+    const close = () => button?.setAttribute('aria-expanded', 'false');
+    group.addEventListener('mouseenter', () => button?.setAttribute('aria-expanded', 'true'));
+    group.addEventListener('mouseleave', close);
+    button?.addEventListener('click', () => {
+      button.setAttribute('aria-expanded', button.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
+    });
+    button?.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') close();
+    });
+  });
+</script>
