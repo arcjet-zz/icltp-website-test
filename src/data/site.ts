@@ -1,11 +1,9 @@
 export const navGroups = [
   {
-    label: 'Conference',
+    label: 'Program',
     links: [
-      { label: 'About ICLTP', href: '/#about' },
       { label: 'Scientific topics', href: '/topics/' },
-      { label: 'Committees', href: '/committees/' },
-      { label: 'Invited speakers', href: '/speakers/' },
+      { label: 'Plenary speakers', href: '/speakers/' },
       { label: 'Program', href: '/program/' },
     ],
   },
@@ -15,26 +13,27 @@ export const navGroups = [
       { label: 'Abstract submission', href: '/abstract-submission/' },
       { label: 'Registration', href: '/registration/' },
       { label: 'Travel grants', href: '/travel-grants/' },
-      { label: 'Student awards', href: '/oral-presentation-award/' },
-      { label: 'Sponsor the conference', href: '/sponsorship/' },
+      { label: 'Oral presentation award', href: '/oral-presentation-award/' },
+      { label: 'Poster awards', href: '/poster-awards/' },
     ],
   },
   {
-    label: 'Plan your trip',
+    label: 'Plan your visit',
     links: [
       { label: 'Venue & transport', href: '/venue/' },
-      { label: 'Lodging', href: '/lodging/' },
+      { label: 'Accommodation', href: '/lodging/' },
       { label: 'Visa information', href: '/visa/' },
-      { label: 'Beijing tours', href: '/tours/' },
+      { label: 'Beijing', href: '/tours/' },
     ],
   },
   {
-    label: 'More',
+    label: 'About',
     links: [
-      { label: 'News & announcement', href: '/assets/documents/6c21a898e8-1780065938462339.pdf' },
+      { label: 'About ICLTP', href: '/#about' },
+      { label: 'Committees', href: '/committees/' },
       { label: 'Sponsors', href: '/sponsors/' },
+      { label: 'Sponsorship', href: '/sponsorship/' },
       { label: 'Contact', href: '/contact/' },
-      { label: 'ICLTP constitution', href: '/assets/documents/22d8437088-1769394112175005.pdf' },
     ],
   },
 ] as const;

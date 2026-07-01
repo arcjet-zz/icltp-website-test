@@ -8,8 +8,8 @@ import icltpLogo from '../assets/branding/icltp-2027-logo.png';
 <a class="skip-link" href="#main-content">Skip to main content</a>
 <div class="announcement">
   <div class="shell announcement-inner">
-    <span><strong>ICLTP 2027</strong> · Beijing · April 19–23, 2027</span>
-    <a href={withBase('/registration/')}>Registration opens August 1, 2026 <span aria-hidden="true">↗</span></a>
+    <span><strong>ICLTP 2027</strong> · 19–23 April · Beijing, China</span>
+    <a href={withBase('/abstract-submission/')}>Abstract deadline: 1 December 2026 <span aria-hidden="true">→</span></a>
   </div>
 </div>
 
@@ -40,7 +40,7 @@ import icltpLogo from '../assets/branding/icltp-2027-logo.png';
     </nav>
 
     <a class="button button-small header-cta" href={withBase('/registration/')}>
-      Register
+      Registration
       <svg aria-hidden="true" viewBox="0 0 20 20"><path d="M5 15 15 5M7 5h8v8" /></svg>
     </a>
 
@@ -57,7 +57,7 @@ import icltpLogo from '../assets/branding/icltp-2027-logo.png';
             </div>
           ))
         }
-        <a class="button" href={withBase('/registration/')}>Register</a>
+        <a class="button" href={withBase('/registration/')}>Registration</a>
       </div>
     </details>
   </div>
@@ -65,15 +65,32 @@ import icltpLogo from '../assets/branding/icltp-2027-logo.png';
 
 <script>
   document.querySelectorAll('.nav-group').forEach((group) => {
+    if (!(group instanceof HTMLElement) || group.dataset.navBound === 'true') return;
+    group.dataset.navBound = 'true';
     const button = group.querySelector('button');
     const close = () => button?.setAttribute('aria-expanded', 'false');
-    group.addEventListener('mouseenter', () => button?.setAttribute('aria-expanded', 'true'));
     group.addEventListener('mouseleave', close);
     button?.addEventListener('click', () => {
       button.setAttribute('aria-expanded', button.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
     });
     button?.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') close();
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        button.setAttribute('aria-expanded', button.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
+      } else if (event.key === 'Escape') {
+        close();
+        button.blur();
+      }
     });
+  });
+
+  document.querySelectorAll<HTMLDetailsElement>('.mobile-menu').forEach((menu) => {
+    if (menu.dataset.navBound === 'true') return;
+    menu.dataset.navBound = 'true';
+    const summary = menu.querySelector('summary');
+    const syncLabel = () => summary?.setAttribute('aria-label', menu.open ? 'Close navigation' : 'Open navigation');
+    menu.addEventListener('toggle', syncLabel);
+    menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => menu.removeAttribute('open')));
+    syncLabel();
   });
 </script>

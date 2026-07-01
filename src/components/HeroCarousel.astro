@@ -65,10 +65,11 @@ const slides = [
           <Image
             src={slide.image}
             alt={slide.alt}
-            widths={[480, 720, 960]}
-            sizes="(max-width: 640px) 92vw, (max-width: 900px) 72vw, 38vw"
+            widths={[720, 1080, 1440]}
+            sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 900px) calc(100vw - 48px), 50vw"
             loading={index === 0 ? 'eager' : 'lazy'}
-            quality={84}
+            fetchpriority={index === 0 ? 'high' : 'auto'}
+            quality={90}
           />
         </figure>
       ))
@@ -98,6 +99,9 @@ const slides = [
 
 <script>
   document.querySelectorAll<HTMLElement>('[data-hero-carousel]').forEach((carousel) => {
+    if (carousel.dataset.carouselBound === 'true') return;
+    carousel.dataset.carouselBound = 'true';
+
     const slides = Array.from(carousel.querySelectorAll<HTMLElement>('[data-carousel-slide]'));
     const previous = carousel.querySelector<HTMLButtonElement>('[data-carousel-previous]');
     const next = carousel.querySelector<HTMLButtonElement>('[data-carousel-next]');
@@ -125,7 +129,7 @@ const slides = [
     }
 
     const stop = () => {
-      window.clearInterval(timer);
+      window.clearTimeout(timer);
       timer = undefined;
       progress?.classList.remove('is-running');
     };
@@ -133,8 +137,9 @@ const slides = [
     const start = () => {
       stop();
       if (manuallyPaused || document.hidden) return;
+      void progress?.offsetWidth;
       progress?.classList.add('is-running');
-      timer = window.setInterval(() => show(current + 1), 6000);
+      timer = window.setTimeout(() => show(current + 1), 6000);
     };
 
     const show = (requested: number) => {
@@ -157,10 +162,6 @@ const slides = [
       pause.setAttribute('aria-label', manuallyPaused ? 'Resume image carousel' : 'Pause image carousel');
       manuallyPaused ? stop() : start();
     });
-    carousel.addEventListener('mouseenter', stop);
-    carousel.addEventListener('mouseleave', start);
-    carousel.addEventListener('focusin', stop);
-    carousel.addEventListener('focusout', start);
     carousel.addEventListener('keydown', (event) => {
       if (event.key === 'ArrowLeft') show(current - 1);
       if (event.key === 'ArrowRight') show(current + 1);

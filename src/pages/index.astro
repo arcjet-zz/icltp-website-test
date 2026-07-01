@@ -1,328 +1,286 @@
 ---
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Countdown from '../components/Countdown';
 import HeroCarousel from '../components/HeroCarousel.astro';
-import { deadlines, speakers, topics } from '../data/site';
+import { deadlines, speakers } from '../data/site';
 import { withBase } from '../utils/url';
-import venueImage from '../assets/venue.jpg';
+import beijingImage from '../assets/beijing.jpg';
 
 const arrow = `<svg aria-hidden="true" viewBox="0 0 20 20"><path d="M5 15 15 5M7 5h8v8"/></svg>`;
+
+const topicGroups = [
+  {
+    number: '01',
+    title: 'Fundamentals & methods',
+    topics: ['Fundamental plasma science', 'Plasma diagnostics', 'Modelling and simulation'],
+  },
+  {
+    number: '02',
+    title: 'Sources & systems',
+    topics: ['Radio-frequency plasmas', 'Atmospheric microplasmas', 'Magnetized plasmas', 'DC, AC and other sources'],
+  },
+  {
+    number: '03',
+    title: 'Processes & applications',
+    topics: ['Semiconductor processing', 'Gas conversion and catalysis', 'Biomedical and liquid interactions', 'Propulsion and agriculture'],
+  },
+];
+
+const formats = [
+  ['Plenary lectures', 'Broad perspectives from established researchers'],
+  ['Invited & contributed talks', 'Focused results across fourteen scientific topics'],
+  ['Poster sessions', 'Dedicated time for detailed technical exchange'],
+  ['Student program', 'Travel support and presentation awards'],
+];
 ---
 
-<BaseLayout>
-  <section class="hero">
-    <div class="hero-plasma plasma-one"></div>
-    <div class="hero-plasma plasma-two"></div>
-    <div class="hero-grid-lines"></div>
-    <div class="shell hero-layout">
-      <div class="hero-copy">
-        <p class="eyebrow eyebrow-light"><span></span> The first edition · Beijing 2027</p>
-        <h1>
-          Explore the frontiers of
-          <em>low temperature plasmas.</em>
-        </h1>
-        <p class="hero-lede">
-          Five days of fundamental science, emerging technology and global collaboration—where plasma
-          physicists, engineers and the next generation meet.
+<BaseLayout
+  title="ICLTP 2027 — International Conference on Low Temperature Plasmas"
+  description="The 1st International Conference on Low Temperature Plasmas, 19–23 April 2027 in Beijing, China."
+>
+  <section class="home-hero">
+    <div class="shell home-hero-grid">
+      <div class="home-hero-copy">
+        <p class="home-kicker">19–23 April 2027 · Beijing, China</p>
+        <h1>The 1st International Conference on <em>Low Temperature Plasmas</em></h1>
+        <p class="home-hero-summary">
+          An international scientific meeting covering the foundations, diagnostics, modeling, sources
+          and applications of low-temperature plasmas.
         </p>
-        <div class="hero-actions">
-          <a class="button button-bright" href={withBase('/registration/')}>
-            Register
+        <div class="home-hero-actions">
+          <a class="button home-button-primary" href={withBase('/registration/')}>
+            Registration information
             <Fragment set:html={arrow} />
           </a>
-          <a class="button button-outline-light" href={withBase('/abstract-submission/')}>
-            Submit an abstract
-            <Fragment set:html={arrow} />
-          </a>
-          <a class="text-link text-link-light" href={withBase('/speakers/')}>
-            Explore the speakers
-            <span aria-hidden="true">→</span>
+          <a class="home-inline-link" href={withBase('/abstract-submission/')}>
+            Abstract submission <span aria-hidden="true">→</span>
           </a>
         </div>
-        <div class="hero-facts" aria-label="Conference details">
-          <div><span>01</span><p><strong>April 19–23</strong>2027</p></div>
-          <div><span>02</span><p><strong>Beijing</strong>China</p></div>
-          <div><span>03</span><p><strong>14 themes</strong>One community</p></div>
-        </div>
+        <p class="home-status">
+          <span>Current status</span>
+          Registration opens 1 August 2026. Abstract submission opens 1 September 2026.
+        </p>
       </div>
 
-      <div class="hero-visual">
+      <div class="home-hero-carousel">
         <HeroCarousel />
-        <div class="hero-event-meta" aria-label="Conference date and location">
-          <p><span>Conference dates</span><strong>19–23 April 2027</strong></p>
-          <p><span>Host city</span><strong>Beijing, China</strong></p>
-        </div>
-        <svg class="hero-orbit" viewBox="0 0 320 320" aria-hidden="true">
-          <circle cx="160" cy="160" r="112" />
-          <ellipse cx="160" cy="160" rx="145" ry="58" transform="rotate(-28 160 160)" />
-          <path d="M28 205C98 82 213 58 293 119" />
-          <circle class="orbit-dot" cx="276" cy="89" r="5" />
-        </svg>
       </div>
     </div>
-    <div class="shell countdown-row">
-      <p><span class="live-dot"></span> Countdown to opening session</p>
-      <Countdown client:load target="2027-04-19T09:00:00+08:00" />
+
+    <div class="shell home-fact-grid" aria-label="Conference facts">
+      <div><span>Dates</span><strong>19–23 April 2027</strong></div>
+      <div><span>Location</span><strong>Beijing, China</strong></div>
+      <div><span>Scientific scope</span><strong>14 topics</strong></div>
+      <div><span>Meeting format</span><strong>In person</strong></div>
     </div>
   </section>
 
-  <section class="section section-intro" id="about">
-    <div class="shell intro-grid">
-      <div>
-        <p class="eyebrow"><span></span> Why ICLTP</p>
-        <h2 class="display-title">A new forum for a field in motion.</h2>
-      </div>
-      <div class="intro-copy">
-        <p class="lead">
-          ICLTP 2027 brings together scientists, engineers and students working across the full spectrum
-          of low temperature plasma science and technology.
+  <section class="home-section home-overview" id="about">
+    <div class="shell home-overview-grid">
+      <header class="home-section-intro">
+        <p class="home-kicker">About the meeting</p>
+        <h2>A forum for low-temperature plasma research.</h2>
+      </header>
+      <div class="home-overview-copy">
+        <p class="home-lead">
+          ICLTP 2027 brings together researchers, engineers and students working from fundamental
+          plasma physics to industrial, biomedical, energy and environmental applications.
         </p>
         <p>
-          From electron kinetics and plasma diagnostics to semiconductor manufacturing, medicine and
-          sustainable chemistry, the conference is built for meaningful exchange across disciplines—and
-          across generations.
+          The program is designed for technical exchange across disciplines, with plenary lectures,
+          contributed presentations, poster sessions and dedicated support for student participation.
         </p>
-        <a class="text-link" href={withBase('/topics/')}>Discover all scientific topics <span aria-hidden="true">→</span></a>
       </div>
-      <aside class="intro-note">
-        <span>ICLTP / 01</span>
-        <p>“Connecting ideas, disciplines and people to shape the future of plasma science.”</p>
+      <dl class="home-format-list">
+        {formats.map(([title, description], index) => (
+          <div>
+            <dt><span>{String(index + 1).padStart(2, '0')}</span>{title}</dt>
+            <dd>{description}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <section class="home-section home-dates" id="important-dates">
+    <div class="shell">
+      <div class="home-section-heading">
+        <div>
+          <p class="home-kicker home-kicker-light">Participation timeline</p>
+          <h2>Important dates</h2>
+        </div>
+        <p>All dates use China Standard Time (UTC+8). Any changes will be published on the relevant information page.</p>
+      </div>
+      <div class="home-date-list">
+        {deadlines.map((item, index) => (
+          <div>
+            <span class="home-date-index">{String(index + 1).padStart(2, '0')}</span>
+            <time datetime={`${item.year}-${item.date.startsWith('Sep') ? '09-01' : item.date.startsWith('Dec') ? '12-01' : item.date.startsWith('Feb') ? '02-01' : '03-01'}`}>
+              <strong>{item.date}</strong>
+              <span>{item.year}</span>
+            </time>
+            <span class="home-date-label">{item.label}</span>
+          </div>
+        ))}
+      </div>
+      <a class="home-inline-link home-inline-link-light" href={withBase('/abstract-submission/')}>
+        Read the submission guidance <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="home-section home-science">
+    <div class="shell">
+      <div class="home-section-heading home-section-heading-dark">
+        <div>
+          <p class="home-kicker">Scientific scope</p>
+          <h2>Fourteen topics across the research continuum.</h2>
+        </div>
+        <p>
+          The scope connects fundamental processes and experimental methods with plasma sources,
+          materials, energy, health and environmental applications.
+        </p>
+      </div>
+      <div class="home-topic-grid">
+        {topicGroups.map((group) => (
+          <article>
+            <span>{group.number}</span>
+            <h3>{group.title}</h3>
+            <ul>
+              {group.topics.map((topic) => <li>{topic}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+      <a class="home-wide-link" href={withBase('/topics/')}>
+        <span>View all fourteen topic descriptions</span>
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="home-section home-speakers">
+    <div class="shell">
+      <div class="home-section-heading home-section-heading-dark">
+        <div>
+          <p class="home-kicker">Scientific program</p>
+          <h2>Confirmed plenary speakers</h2>
+        </div>
+        <a class="home-inline-link" href={withBase('/speakers/')}>Speaker details <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="home-speaker-marquee" aria-label="Confirmed plenary speakers. Animation pauses on hover or keyboard focus.">
+        <div class="home-speaker-track">
+          <div class="home-speaker-group" aria-hidden="true">
+            {speakers.map((speaker, index) => (
+              <article class="home-speaker-card">
+                <a href={withBase('/speakers/')} tabindex="-1">
+                  <div class="home-speaker-photo">
+                    <img src={withBase(speaker.image)} alt="" width="480" height="360" loading="lazy" />
+                    <span class="home-speaker-index">{String(index + 1).padStart(2, '0')}</span>
+                  </div>
+                  <div class="home-speaker-copy">
+                    <span class="home-speaker-role">{speaker.role}</span>
+                    <h3>{speaker.name}</h3>
+                    <p class="home-speaker-affiliation">{speaker.affiliation}</p>
+                    <p class="home-speaker-subject">{speaker.title}</p>
+                    <span class="home-speaker-link">Speaker profile <b aria-hidden="true">→</b></span>
+                  </div>
+                </a>
+              </article>
+            ))}
+          </div>
+          <div class="home-speaker-group">
+            {speakers.map((speaker, index) => (
+              <article class="home-speaker-card">
+                <a href={withBase('/speakers/')} aria-label={`Read about ${speaker.name}`}>
+                  <div class="home-speaker-photo">
+                    <img src={withBase(speaker.image)} alt="" width="480" height="360" loading="lazy" />
+                    <span class="home-speaker-index">{String(index + 1).padStart(2, '0')}</span>
+                  </div>
+                  <div class="home-speaker-copy">
+                    <span class="home-speaker-role">{speaker.role}</span>
+                    <h3>{speaker.name}</h3>
+                    <p class="home-speaker-affiliation">{speaker.affiliation}</p>
+                    <p class="home-speaker-subject">{speaker.title}</p>
+                    <span class="home-speaker-link">Speaker profile <b aria-hidden="true">→</b></span>
+                  </div>
+                </a>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section home-visit">
+    <div class="shell home-visit-grid">
+      <figure>
+        <Image
+          src={beijingImage}
+          alt="The Forbidden City Corner Tower reflected in its moat beneath an evening sky"
+          widths={[640, 900, 1200]}
+          sizes="(max-width: 900px) 100vw, 48vw"
+          loading="lazy"
+        />
+        <figcaption>Forbidden City Corner Tower · Beijing</figcaption>
+      </figure>
+      <div class="home-visit-copy">
+        <p class="home-kicker">Plan your visit</p>
+        <h2>Practical information for Beijing</h2>
+        <p>
+          The venue is in Beijing’s Changping District. Travel, accommodation and visa guidance are
+          maintained as separate reference pages so participants can find current details quickly.
+        </p>
+        <nav aria-label="Visitor information">
+          <a href={withBase('/venue/')}><span>Venue & transport</span><span aria-hidden="true">→</span></a>
+          <a href={withBase('/lodging/')}><span>Accommodation</span><span aria-hidden="true">→</span></a>
+          <a href={withBase('/visa/')}><span>Visa information</span><span aria-hidden="true">→</span></a>
+          <a href={withBase('/tours/')}><span>About Beijing</span><span aria-hidden="true">→</span></a>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section home-organization">
+    <div class="shell home-organization-grid">
+      <header>
+        <p class="home-kicker">Organization</p>
+        <h2>Convened by the plasma science community.</h2>
+      </header>
+      <dl>
+        <div>
+          <dt>Guiding unit</dt>
+          <dd>Plasma Science and Technology Committee of the Chinese Society of Theoretical and Applied Mechanics</dd>
+        </div>
+        <div>
+          <dt>Organizer</dt>
+          <dd>Chinese Society of Theoretical and Applied Mechanics</dd>
+        </div>
+        <div>
+          <dt>Supporting institutions</dt>
+          <dd>Institute of Mechanics, Chinese Academy of Sciences · Beihang University · Tsinghua University</dd>
+        </div>
+      </dl>
+      <aside>
+        <span>Conference enquiries</span>
+        <a href="mailto:tianshengwei@buaa.edu.cn">tianshengwei@buaa.edu.cn</a>
+        <a href="mailto:20375069@buaa.edu.cn">20375069@buaa.edu.cn</a>
+        <a class="home-inline-link" href={withBase('/contact/')}>Full contact directory <span aria-hidden="true">→</span></a>
       </aside>
     </div>
   </section>
 
-  <section class="section deadlines-section">
-    <div class="shell">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow eyebrow-light"><span></span> Mark your calendar</p>
-          <h2>Important deadlines</h2>
-        </div>
-        <a class="button button-ghost" href={withBase('/abstract-submission/')}>Submission details <Fragment set:html={arrow} /></a>
-      </div>
-      <div class="deadline-list">
-        {deadlines.map((item, index) => (
-          <a href={withBase(index === 0 ? '/speakers/' : index < 3 ? '/abstract-submission/' : '/registration/')} class="deadline-item">
-            <span class="deadline-number">{String(index + 1).padStart(2, '0')}</span>
-            <div class="deadline-date"><strong>{item.date}</strong><span>{item.year}</span></div>
-            <div class="deadline-name"><strong>{item.label}</strong><span>{item.state}</span></div>
-            <span class="deadline-arrow" aria-hidden="true">↗</span>
-          </a>
-        ))}
-      </div>
-      <p class="deadline-footnote">Registration opens August 1, 2026. Dates are shown in China Standard Time (UTC+8).</p>
-    </div>
-  </section>
-
-  <section class="section topics-section">
-    <div class="shell">
-      <div class="section-heading section-heading-dark">
-        <div>
-          <p class="eyebrow"><span></span> Scientific scope</p>
-          <h2 class="display-title">One field. Many frontiers.</h2>
-        </div>
-        <p>Fourteen focused topics connect foundational research with technologies reshaping industry, health and sustainability.</p>
-      </div>
-      <div class="topic-grid">
-        {topics.map((topic) => (
-          <a class="topic-card" href={withBase('/topics/')}>
-            <div class="topic-top"><span>{topic.index}</span><span aria-hidden="true">↗</span></div>
-            <h3>{topic.title}</h3>
-            <p>{topic.text}</p>
-            <div class="topic-wave" aria-hidden="true"><i></i><i></i><i></i></div>
-          </a>
-        ))}
-      </div>
-      <a class="all-topics-link" href={withBase('/topics/')}><span>View all 14 conference topics</span><span aria-hidden="true">→</span></a>
-    </div>
-  </section>
-
-  <section class="section speakers-section">
-    <div class="shell">
-      <div class="section-heading section-heading-dark">
-        <div>
-          <p class="eyebrow"><span></span> Plenary speakers</p>
-          <h2 class="display-title">Ideas worth crossing borders for.</h2>
-        </div>
-        <a class="text-link" href={withBase('/speakers/')}>Meet all invited speakers <span aria-hidden="true">→</span></a>
-      </div>
-      <div class="speaker-grid">
-        {speakers.map((speaker, index) => (
-          <article class="speaker-card">
-            <a href={withBase('/speakers/')} aria-label={`Read about ${speaker.name}`}>
-              <div class="speaker-image">
-                <img src={withBase(speaker.image)} alt={speaker.name} width="420" height="500" loading="lazy" />
-                <span>{speaker.role}</span>
-              </div>
-              <div class="speaker-meta">
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <div>
-                  <h3>{speaker.name}</h3>
-                  <p>{speaker.affiliation}</p>
-                </div>
-              </div>
-              <p class="speaker-title">{speaker.title}</p>
-            </a>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section program-section">
-    <div class="shell program-grid">
-      <div class="program-copy">
-        <p class="eyebrow eyebrow-light"><span></span> Five days in Beijing</p>
-        <h2>Science by day.<br /><em>Connections for years.</em></h2>
-        <p>
-          A focused program of plenary lectures, invited talks, contributed sessions, poster exchange and
-          space for the conversations that move research forward.
-        </p>
-        <a class="button button-bright" href={withBase('/program/')}>Explore the program <Fragment set:html={arrow} /></a>
-      </div>
-      <div class="program-days">
-        {['Arrival & welcome', 'Opening & plenaries', 'Parallel science', 'Ideas in exchange', 'Closing & next steps'].map((label, i) => (
-          <div class="program-day">
-            <span>DAY {i + 1}</span>
-            <strong>{19 + i} APR</strong>
-            <p>{label}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section beijing-section">
-    <div class="shell beijing-grid">
-      <div class="beijing-image">
-        <Image src={venueImage} alt="Modern hotel and conference venue in Beijing" widths={[640, 900]} sizes="(max-width: 800px) 92vw, 48vw" loading="lazy" />
-        <span>Vision Plaza Shahe Bailing</span>
-      </div>
-      <div class="beijing-copy">
-        <p class="eyebrow"><span></span> Your Beijing guide</p>
-        <h2 class="display-title">Where a long history meets what’s next.</h2>
-        <p>
-          Convene at Vision Plaza Shahe Bailing, with practical travel guidance for airports, hotels, visa
-          arrangements and time to experience one of the world’s great cities.
-        </p>
-        <div class="beijing-links">
-          <a href={withBase('/venue/')}><span>01</span> Venue & transport <b aria-hidden="true">↗</b></a>
-          <a href={withBase('/lodging/')}><span>02</span> Where to stay <b aria-hidden="true">↗</b></a>
-          <a href={withBase('/visa/')}><span>03</span> Visa information <b aria-hidden="true">↗</b></a>
-          <a href={withBase('/tours/')}><span>04</span> Explore Beijing <b aria-hidden="true">↗</b></a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section student-section">
-    <div class="shell">
-      <p class="eyebrow"><span></span> Next generation</p>
-      <div class="student-heading">
-        <h2 class="display-title">Support for the scientists who come next.</h2>
-        <p>ICLTP helps students participate, present their work and receive recognition from the international plasma community.</p>
-      </div>
-      <div class="student-cards">
-        <a href={withBase('/travel-grants/')}><span>Travel</span><h3>Student travel grants</h3><p>Support to help eligible students join the conference in Beijing.</p><b aria-hidden="true">↗</b></a>
-        <a href={withBase('/oral-presentation-award/')}><span>Present</span><h3>Oral presentation award</h3><p>Recognition for clarity, originality and scientific contribution.</p><b aria-hidden="true">↗</b></a>
-        <a href={withBase('/poster-awards/')}><span>Share</span><h3>Poster awards</h3><p>Celebrating compelling visual communication and research quality.</p><b aria-hidden="true">↗</b></a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section community-section" id="organization">
-    <div class="shell">
-      <div class="community-heading">
-        <div>
-          <p class="eyebrow"><span></span> The people behind ICLTP</p>
-          <h2 class="display-title">Organized with purpose.<br />Open to conversation.</h2>
-        </div>
-        <p>
-          ICLTP is guided by the international plasma community and supported by leading scientific
-          institutions in China.
-        </p>
-      </div>
-
-      <div class="community-grid">
-        <article class="organization-panel">
-          <div class="panel-heading">
-            <span>01</span>
-            <h3>Organization</h3>
-          </div>
-          <dl class="organization-list">
-            <div>
-              <dt>Guiding unit</dt>
-              <dd>Plasma Science and Technology Committee of the Chinese Society of Theoretical and Applied Mechanics</dd>
-            </div>
-            <div>
-              <dt>Organizer</dt>
-              <dd>Chinese Society of Theoretical and Applied Mechanics</dd>
-            </div>
-            <div>
-              <dt>Supporters</dt>
-              <dd>
-                <span>Institute of Mechanics, Chinese Academy of Sciences</span>
-                <span>Beihang University</span>
-                <span>Tsinghua University</span>
-              </dd>
-            </div>
-          </dl>
-        </article>
-
-        <article class="contact-panel" id="contact-us">
-          <div class="panel-heading">
-            <span>02</span>
-            <h3>Contact us</h3>
-          </div>
-          <div class="contact-groups">
-            <section>
-              <h4>Scientific program or technical information</h4>
-              <div class="contact-person-grid">
-                <a class="contact-person" href="mailto:tianshengwei@buaa.edu.cn" aria-label="Email Shengwei Tian at tianshengwei@buaa.edu.cn">
-                  <span>Shengwei Tian</span>
-                  <strong>tianshengwei@buaa.edu.cn</strong>
-                  <b aria-hidden="true">↗</b>
-                </a>
-                <a class="contact-person" href="mailto:20375069@buaa.edu.cn" aria-label="Email Tao Wu at 20375069@buaa.edu.cn">
-                  <span>Tao Wu</span>
-                  <strong>20375069@buaa.edu.cn</strong>
-                  <b aria-hidden="true">↗</b>
-                </a>
-              </div>
-            </section>
-            <section>
-              <h4>All other questions</h4>
-              <div class="contact-person-grid">
-                <a class="contact-person" href="mailto:whx@buaa.edu.cn" aria-label="Email Hai-Xing Wang at whx@buaa.edu.cn">
-                  <small>Local Organizing Committee Co-Chair</small>
-                  <span>Hai-Xing Wang</span>
-                  <strong>whx@buaa.edu.cn</strong>
-                  <b aria-hidden="true">↗</b>
-                </a>
-                <a class="contact-person" href="mailto:schulze@aept.rub.de" aria-label="Email Julian Schulze at schulze@aept.rub.de">
-                  <small>ICLTP Executive Committee Chair</small>
-                  <span>Julian Schulze</span>
-                  <strong>schulze@aept.rub.de</strong>
-                  <b aria-hidden="true">↗</b>
-                </a>
-              </div>
-            </section>
-          </div>
-          <a class="text-link contact-page-link" href={withBase('/contact/')}>Open the contact directory <span aria-hidden="true">→</span></a>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="closing-cta">
-    <div class="closing-plasma"></div>
-    <div class="shell closing-content">
-      <p class="eyebrow eyebrow-light"><span></span> ICLTP 2027 · Beijing</p>
-      <h2>Bring your questions.<br /><em>Leave with new ones.</em></h2>
+  <section class="home-actions">
+    <div class="shell home-actions-grid">
       <div>
-        <a class="button button-bright" href={withBase('/abstract-submission/')}>Submit your abstract <Fragment set:html={arrow} /></a>
-        <a class="text-link text-link-light" href="https://icltp.com">Join the mailing list <span aria-hidden="true">→</span></a>
+        <p class="home-kicker home-kicker-light">Participate in ICLTP 2027</p>
+        <h2>Registration and abstract submission</h2>
+        <p>Registration opens 1 August 2026. Abstract submission opens 1 September 2026.</p>
+      </div>
+      <div>
+        <a class="button home-button-light" href={withBase('/registration/')}>Registration details <Fragment set:html={arrow} /></a>
+        <a class="home-inline-link home-inline-link-light" href={withBase('/abstract-submission/')}>Submission requirements <span aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>

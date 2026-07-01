@@ -1,0 +1,36 @@
+<aside class="floating-actions" aria-label="Quick page actions">
+  <a
+    class="floating-action floating-action-subscribe"
+    href="https://subscribe.icltp.com"
+    target="_blank"
+    rel="noopener"
+    aria-label="Subscribe to ICLTP email updates"
+  >
+    <svg aria-hidden="true" viewBox="0 0 24 24">
+      <path d="M3.5 6.5h17v11h-17zM4 7l8 6 8-6" />
+    </svg>
+    <span>Email updates</span>
+  </a>
+  <button class="floating-action floating-action-top" type="button" data-back-to-top aria-label="Back to top">
+    <svg aria-hidden="true" viewBox="0 0 24 24">
+      <path d="m6 10 6-6 6 6M12 4v16" />
+    </svg>
+    <span>Top</span>
+  </button>
+</aside>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-back-to-top]').forEach((button) => {
+    if (button.dataset.bound === 'true') return;
+    button.dataset.bound = 'true';
+
+    const sync = () => button.classList.toggle('is-visible', window.scrollY > 520);
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    button.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+    });
+    window.addEventListener('scroll', sync, { passive: true });
+    sync();
+  });
+</script>
